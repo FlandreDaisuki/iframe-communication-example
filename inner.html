@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inner frame</title>
-  <script type="module" src="./index.js"></script>
 </head>
 <body>
   <h1>Inner frame</h1>
@@ -18,23 +17,6 @@
     <button id="ask-btn">ask to parent</button><output id="answer"></output>
   </div>
 
-  <script type="module">
-    import { onParentQuestion, askToParentFrame } from './message.js';
-    import { TOPIC } from './index.js';
-
-    const inputEl = document.getElementById('input');
-    const answerEl = document.getElementById('answer');
-
-    document.getElementById('ask-btn').onclick = async () => {
-      const answer = await askToParentFrame(TOPIC.COUNTER_TIMES);
-      answerEl.textContent = answer;
-    };
-
-    onParentQuestion((msg) => {
-      if(msg.topic === TOPIC.INPUT_VALUE) {
-        return inputEl.value;
-      }
-    });
-  </script>
+  <script type="module" src="./index.js"></script>
 </body>
 </html>

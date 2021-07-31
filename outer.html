@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outer frame</title>
+  <script type="module" src="./index.js"></script>
+</head>
+<body>
+  <h1>Outer frame</h1>
+
+  <div>
+    <button id="inc-btn">+1</button><output id="output">0</output>
+  </div>
+
+  <div>
+    <button id="ask-btn">ask to child</button><output id="answer"></output>
+  </div>
+
+  <iframe id="child" src="http://0.0.0.0:9000/inner.html" frameborder="0"></iframe>
+
+  <script type="module">
+    import { answerOf, onChildQuestion, askToChildFrame } from './message.js';
+    import { TOPIC } from './index.js';
+
+    const outputEl = document.getElementById('output');
+    const answerEl = document.getElementById('answer');
+    const childEl = document.getElementById('child');
+
+    document.getElementById('inc-btn').onclick = () => {
+      outputEl.textContent = parseInt(outputEl.textContent) + 1;
+    };
+
+    document.getElementById('ask-btn').onclick = async () => {
+      askToChildFrame(childEl, TOPIC.INPUT_VALUE);
+      const answer = await answerOf(TOPIC.INPUT_VALUE);
+      answerEl.textContent = answer;
+    };
+
+    onChildQuestion((msg)=>{
+      console.debug('onChildQuestion', msg);
+      if(msg.topic === TOPIC.COUNTER_TIMES) {
+        return parseInt(outputEl.textContent);
+      }
+    });
+  </script>
+</body>
+</html>

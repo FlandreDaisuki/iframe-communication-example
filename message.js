@@ -77,7 +77,7 @@ const childQuestions = [];
 
 export const onChildQuestion = (fn) => childQuestions.push(fn);
 
-export const setupOuterFrameMessageListener = () => {
+export const setupParentFrameMessageListener = () => {
   // Handles request from child frame
   window.addEventListener('message', (event) => {
     const msg = event.data;
@@ -99,7 +99,7 @@ const parentQuestions = [];
 
 export const onParentQuestion = (fn) => parentQuestions.push(fn);
 
-export const setupInnerFrameMessageListener = () => {
+export const setupChildFrameMessageListener = () => {
 // Handles request from parent frame
   window.addEventListener('message', (event) => {
 

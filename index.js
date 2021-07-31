@@ -1,13 +1,13 @@
 import {
   isChildFrame,
-  setupInnerFrameMessageListener,
-  setupOuterFrameMessageListener,
+  setupChildFrameMessageListener,
+  setupParentFrameMessageListener,
 } from './message.js';
 
 if (isChildFrame()) {
-  setupInnerFrameMessageListener();
+  setupChildFrameMessageListener();
 } else {
-  setupOuterFrameMessageListener();
+  setupParentFrameMessageListener();
 }
 
 export const TOPIC = Object.freeze({

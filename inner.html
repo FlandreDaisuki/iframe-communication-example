@@ -19,16 +19,14 @@
   </div>
 
   <script type="module">
-    import { answerOf, onParentQuestion, askToParentFrame } from './message.js';
+    import { onParentQuestion, askToParentFrame } from './message.js';
     import { TOPIC } from './index.js';
 
     const inputEl = document.getElementById('input');
     const answerEl = document.getElementById('answer');
 
     document.getElementById('ask-btn').onclick = async () => {
-      askToParentFrame(TOPIC.COUNTER_TIMES);
-      const answer = await answerOf(TOPIC.COUNTER_TIMES);
-      console.log('answer of COUNTER_TIMES', answer);
+      const answer = await askToParentFrame(TOPIC.COUNTER_TIMES);
       answerEl.textContent = answer;
     };
 

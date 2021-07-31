@@ -37,22 +37,26 @@ export const isChildFrame = () => {
   }
 };
 
-/** @type {(iframeEl: HTMLIFrameElement, topic: string)=>void} */
-export const askToChildFrame = (iframeEl, topic) => {
+/** @type {(iframeEl: HTMLIFrameElement, topic: string) => Promise<any>} */
+export const askToChildFrame = async(iframeEl, topic) => {
   const { origin } = new URL(iframeEl.src);
   iframeEl.contentWindow.postMessage({
     type: config.typeName,
     topic,
   }, origin);
+  return answerOf(topic);
 };
 
-export const askToParentFrame = (topic) => {
+/** @type {(topic: string) => Promise<any>} */
+export const askToParentFrame = async(topic) => {
   window.parent.postMessage({
     type: config.typeName,
     topic,
   }, '*');
+  return answerOf(topic);
 };
 
+/** @type {(topic: string) => Promise<any>} */
 export const answerOf = async(topic) => {
   let fn;
 

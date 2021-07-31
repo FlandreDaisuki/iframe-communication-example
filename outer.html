@@ -21,7 +21,7 @@
   <iframe id="child" src="http://0.0.0.0:9000/inner.html" frameborder="0"></iframe>
 
   <script type="module">
-    import { answerOf, onChildQuestion, askToChildFrame } from './message.js';
+    import { onChildQuestion, askToChildFrame } from './message.js';
     import { TOPIC } from './index.js';
 
     const outputEl = document.getElementById('output');
@@ -33,13 +33,11 @@
     };
 
     document.getElementById('ask-btn').onclick = async () => {
-      askToChildFrame(childEl, TOPIC.INPUT_VALUE);
-      const answer = await answerOf(TOPIC.INPUT_VALUE);
+      const answer = await askToChildFrame(childEl, TOPIC.INPUT_VALUE);
       answerEl.textContent = answer;
     };
 
     onChildQuestion((msg)=>{
-      console.debug('onChildQuestion', msg);
       if(msg.topic === TOPIC.COUNTER_TIMES) {
         return parseInt(outputEl.textContent);
       }
